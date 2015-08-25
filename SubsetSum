@@ -1,0 +1,62 @@
+/*h
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package fulltimepreparationaftergraduation.DynamicProgramming;
+
+/**
+ *
+ * @author priyamchandra
+ */
+public class SubsetSum {
+    
+    public void subsetExists(int[] set, int sum){
+        
+        int rows = set.length;
+        int cols = sum+1;
+        
+        boolean[][] matrix = new boolean[rows][cols]; 
+        for(int i=0; i<cols; i++){
+            matrix[0][i] = false;
+        }
+        
+        for(int i=0; i<rows; i++){
+            matrix[i][0] = true;
+        }
+        
+        for(int i=1; i<rows; i++){
+            for(int j=1; j<cols; j++){
+                if(j<set[i]){
+                    matrix[i][j] = matrix[i-1][j];
+                }
+                else{
+                    if(matrix[i-1][j]==true)
+                        matrix[i][j]=true;
+                    else{
+                        matrix[i][j]= matrix[i-1][j-set[i]];
+                    }
+                }
+            }
+        }
+   
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                System.out.print(matrix[i][j]+ " ");
+            }
+            System.out.println();
+        }
+        
+        //Print the subset
+     }
+
+    public static void main(String args[]){
+        
+        SubsetSum ob = new SubsetSum();
+        
+        int set[] = {0,2,5,8,10,12};
+        int sum =12;
+        
+        ob.subsetExists(set, sum);
+    }
+}
